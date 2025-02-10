@@ -1,0 +1,39 @@
+D:\Capstone Project\qcu-dolrmam-system\qcu-dolrmam-system\bin\Debug\net8.0-windows\qcu-dolrmam-system.exe
+D:\Capstone Project\qcu-dolrmam-system\qcu-dolrmam-system\bin\Debug\net8.0-windows\qcu-dolrmam-system.deps.json
+D:\Capstone Project\qcu-dolrmam-system\qcu-dolrmam-system\bin\Debug\net8.0-windows\qcu-dolrmam-system.runtimeconfig.json
+D:\Capstone Project\qcu-dolrmam-system\qcu-dolrmam-system\bin\Debug\net8.0-windows\qcu-dolrmam-system.dll
+D:\Capstone Project\qcu-dolrmam-system\qcu-dolrmam-system\bin\Debug\net8.0-windows\qcu-dolrmam-system.pdb
+D:\Capstone Project\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu_dolrmam_system.UtilizationMonitoringForm.resources
+D:\Capstone Project\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu-dolrmam-system.csproj.GenerateResource.cache
+D:\Capstone Project\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu-dolrmam-system.GeneratedMSBuildEditorConfig.editorconfig
+D:\Capstone Project\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu-dolrmam-system.AssemblyInfoInputs.cache
+D:\Capstone Project\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu-dolrmam-system.AssemblyInfo.cs
+D:\Capstone Project\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu-dolrmam-system.csproj.CoreCompileInputs.cache
+D:\Capstone Project\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu-dolrmam-system.dll
+D:\Capstone Project\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\refint\qcu-dolrmam-system.dll
+D:\Capstone Project\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu-dolrmam-system.pdb
+D:\Capstone Project\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu-dolrmam-system.genruntimeconfig.cache
+D:\Capstone Project\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\ref\qcu-dolrmam-system.dll
+D:\Capstone Project\qcu-dolrmam-system\qcu-dolrmam-system\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
+D:\Capstone Project\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu-dolrmam-system.csproj.AssemblyReference.cache
+D:\Capstone Project\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu-dolr.1D947161.Up2Date
+C:\Users\surface\qcu-dolrmam-system\qcu-dolrmam-system\qcu-dolrmam-system\bin\Debug\net8.0-windows\qcu-dolrmam-system.exe
+C:\Users\surface\qcu-dolrmam-system\qcu-dolrmam-system\qcu-dolrmam-system\bin\Debug\net8.0-windows\qcu-dolrmam-system.deps.json
+C:\Users\surface\qcu-dolrmam-system\qcu-dolrmam-system\qcu-dolrmam-system\bin\Debug\net8.0-windows\qcu-dolrmam-system.runtimeconfig.json
+C:\Users\surface\qcu-dolrmam-system\qcu-dolrmam-system\qcu-dolrmam-system\bin\Debug\net8.0-windows\qcu-dolrmam-system.dll
+C:\Users\surface\qcu-dolrmam-system\qcu-dolrmam-system\qcu-dolrmam-system\bin\Debug\net8.0-windows\qcu-dolrmam-system.pdb
+C:\Users\surface\qcu-dolrmam-system\qcu-dolrmam-system\qcu-dolrmam-system\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
+C:\Users\surface\qcu-dolrmam-system\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu-dolrmam-system.csproj.AssemblyReference.cache
+C:\Users\surface\qcu-dolrmam-system\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu_dolrmam_system.UtilizationMonitoringForm.resources
+C:\Users\surface\qcu-dolrmam-system\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu-dolrmam-system.csproj.GenerateResource.cache
+C:\Users\surface\qcu-dolrmam-system\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu-dolrmam-system.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\surface\qcu-dolrmam-system\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu-dolrmam-system.AssemblyInfoInputs.cache
+C:\Users\surface\qcu-dolrmam-system\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu-dolrmam-system.AssemblyInfo.cs
+C:\Users\surface\qcu-dolrmam-system\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu-dolrmam-system.csproj.CoreCompileInputs.cache
+C:\Users\surface\qcu-dolrmam-system\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu-dolrmam-system.sourcelink.json
+C:\Users\surface\qcu-dolrmam-system\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu-dolr.1D947161.Up2Date
+C:\Users\surface\qcu-dolrmam-system\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu-dolrmam-system.dll
+C:\Users\surface\qcu-dolrmam-system\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\refint\qcu-dolrmam-system.dll
+C:\Users\surface\qcu-dolrmam-system\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu-dolrmam-system.pdb
+C:\Users\surface\qcu-dolrmam-system\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\qcu-dolrmam-system.genruntimeconfig.cache
+C:\Users\surface\qcu-dolrmam-system\qcu-dolrmam-system\qcu-dolrmam-system\obj\Debug\net8.0-windows\ref\qcu-dolrmam-system.dll
