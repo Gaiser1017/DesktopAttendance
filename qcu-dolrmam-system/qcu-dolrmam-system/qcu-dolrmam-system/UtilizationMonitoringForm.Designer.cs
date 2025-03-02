@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UtilizationMonitoringForm));
             label1 = new Label();
             panel1 = new Panel();
             roomComboBox = new ComboBox();
@@ -566,6 +567,7 @@
             Controls.Add(panel1);
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4, 5, 4, 5);
             Name = "UtilizationMonitoringForm";
             StartPosition = FormStartPosition.CenterScreen;

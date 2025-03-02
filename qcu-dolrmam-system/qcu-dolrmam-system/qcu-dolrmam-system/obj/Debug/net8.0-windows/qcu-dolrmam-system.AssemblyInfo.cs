@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("qcu-dolrmam-system")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+acadae394360bfafa7761ac78263ff74d144a914")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+78967758f92e2b65261d17906eaa5fac42088163")]
 [assembly: System.Reflection.AssemblyProductAttribute("qcu-dolrmam-system")]
 [assembly: System.Reflection.AssemblyTitleAttribute("qcu-dolrmam-system")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
