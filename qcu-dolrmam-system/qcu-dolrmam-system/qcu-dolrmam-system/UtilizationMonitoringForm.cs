@@ -11,85 +11,110 @@ namespace qcu_dolrmam_system
 {
     public partial class UtilizationMonitoringForm : Form
     {
-        private List<Section> sections = new List<Section>();
+        private List<Subject> subjects = new List<Subject>();
+        private static readonly HttpClient client = new HttpClient();
 
         public UtilizationMonitoringForm()
         {
             InitializeComponent();
-            this.Load += async (s, e) => await LoadSections();
-            yrSecComboBox.SelectedIndexChanged += YrSecComboBox_SelectedIndexChanged;
+            this.Load += async (s, e) => await LoadSubjects();
+            SubComboBox.SelectedIndexChanged += SubComboBox_SelectedIndexChanged;
         }
 
-        // Fetch Sections from API
-        private async Task LoadSections()
+
+        // Fetch Subjects from API
+        private async Task LoadSubjects()
         {
-            string sectionsUrl = "https://qcu-lab-resource.cloud/api/sections";
+            string subjectsUrl = "http://localhost:8000/api/subjects";
 
             using (HttpClient client = new HttpClient())
             {
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(sectionsUrl);
-                    response.EnsureSuccessStatusCode();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpResponseMessage response = await client.GetAsync(subjectsUrl);
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        string errorResponse = await response.Content.ReadAsStringAsync();
+                        MessageBox.Show($"❌ API Error {response.StatusCode}:\n{errorResponse}", "API Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
                     string jsonResponse = await response.Content.ReadAsStringAsync();
-                    sections = JsonConvert.DeserializeObject<List<Section>>(jsonResponse) ?? new List<Section>();
+                    subjects = JsonConvert.DeserializeObject<List<Subject>>(jsonResponse) ?? new List<Subject>();
 
-                    if (sections.Count > 0)
+                    if (subjects.Count > 0)
                     {
-                        yrSecComboBox.DataSource = sections;
-                        yrSecComboBox.DisplayMember = "Name";
-                        yrSecComboBox.ValueMember = "Id";
+                        SubComboBox.DataSource = subjects;
+                        SubComboBox.DisplayMember = "Name";
+                        SubComboBox.ValueMember = "Id";
                     }
+                    else
+                    {
+                        MessageBox.Show("⚠ No subjects found.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                catch (HttpRequestException httpEx)
+                {
+                    MessageBox.Show($"⚠ Network Error: {httpEx.Message}", "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error loading sections: {ex.Message}", "API Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"❌ Unexpected Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
         // Handle Section Selection Change
-        private void YrSecComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void SubComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (yrSecComboBox.SelectedItem is Section selectedSection)
+            if (SubComboBox.SelectedItem is Subject selectedSubject)
             {
-                roomComboBox.Text = selectedSection.Classroom?.Name ?? "N/A";
-                buildingComboBox.Text = selectedSection.Classroom?.Building?.Name ?? "N/A";
+                ProfTextBox.Text = selectedSubject.Professor?.Name ?? "N/A";
+                yrSecComboBox.Text = selectedSubject.Section?.Name ?? "N/A";
+                roomComboBox.Text = selectedSubject.Section?.Classroom?.Name ?? "N/A";
+                buildingComboBox.Text = selectedSubject.Section?.Classroom?.Building?.Name ?? "N/A";
             }
         }
 
         // Store Attendance (API Submission)
-        private async Task StoreAttendance(int professorId, int sectionId, int terminalCode,
-                                   string studentFullName, string studentEmail,
-                                   int studentNumber, string yearSection, string remarks)
+        private async Task StoreAttendance(int subjectId, string terminalNumber,
+                                           string studentFullName, string studentEmail,
+                                           string studentNumber, string remarks)
         {
-            string storeUrl = "https://qcu-lab-resource.cloud/api/store/attendance";  // Ensure backend URL
-
-            using (HttpClient client = new HttpClient())
+            string storeUrl = "http://localhost:8000/api/store/attendance";  // Ensure backend URL
             {
                 try
                 {
+                    // Convert terminalNumber to a string first
+                    string terminalNumberStr = terminalNumber.ToString();
+
                     var attendanceData = new
                     {
-                        professor_id = professorId,
-                        section_id = sectionId,
-                        terminal_code = terminalCode,
+                        subject_id = subjectId,
+                        terminal_number = terminalNumberStr,
                         student_full_name = studentFullName,
                         student_email = studentEmail,
-                        student_number = studentNumber,
-                        year_section = yearSection,
+                        student_number = studentNumber.Trim(), // Ensure no extra spaces
                         remarks = remarks
                     };
 
-                    string jsonPayload = JsonConvert.SerializeObject(attendanceData);
+
+
+                    string jsonPayload;
+                    try
+                    {
+                        jsonPayload = JsonConvert.SerializeObject(attendanceData);
+                    }
+                    catch (JsonException jsonEx)
+                    {
+                        MessageBox.Show($"⚠ JSON Serialization Error: {jsonEx.Message}", "Serialization Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
                     var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-
-                    // ✅ Set the Accept header to expect JSON response
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                    // ✅ Debugging message to check the URL
-                    MessageBox.Show($"Sending POST to: {storeUrl}", "Debug", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     HttpResponseMessage response = await client.PostAsync(storeUrl, content);
                     string responseContent = await response.Content.ReadAsStringAsync();
@@ -116,9 +141,6 @@ namespace qcu_dolrmam_system
 
 
 
-
-
-
         // Save Attendance Button Click
         private async void saveButton_Click(object sender, EventArgs e)
         {
@@ -127,44 +149,12 @@ namespace qcu_dolrmam_system
 
                 bool isValid = true;
 
-                if (string.IsNullOrWhiteSpace(facultyTextBox.Text))
-                {
-                    errorProvider1.SetError(facultyTextBox, "Textbox is empty.");
-                    isValid = false;
-                }
-                else if (!System.Text.RegularExpressions.Regex.IsMatch(facultyTextBox.Text, @"^[a-zA-Z\s]+$"))
-                {
-                    errorProvider1.SetError(facultyTextBox, "Only letters and spaces are allowed.");
-                    isValid = false;
-                }
-
-                if (string.IsNullOrWhiteSpace(subjectTextBox.Text))
-                {
-                    errorProvider1.SetError(subjectTextBox, "Subject name cannot be empty.");
-                    isValid = false;
-                }
-                else if (!System.Text.RegularExpressions.Regex.IsMatch(subjectTextBox.Text, @"^[a-zA-Z0-9]+$"))
-                {
-                    errorProvider1.SetError(subjectTextBox, "Only letters and numbers are allowed in subject name (no spaces).");
-                    isValid = false;
-                }
-
                 if (string.IsNullOrWhiteSpace(StudentNumTextBox.Text))
                 {
                     errorProvider1.SetError(StudentNumTextBox, "Student number cannot be empty.");
                     isValid = false;
                 }
-                else if (!System.Text.RegularExpressions.Regex.IsMatch(StudentNumTextBox.Text, @"^[0-9-]+$"))
-                {
-                    errorProvider1.SetError(StudentNumTextBox, "Only numbers and dashes are allowed in student number.");
-                    isValid = false;
-                }
-                else if (!System.Text.RegularExpressions.Regex.IsMatch(StudentNumTextBox.Text, @"^\d{2}-\d{4}$"))
-                {
-                    errorProvider1.SetError(StudentNumTextBox, "Student number must be in this format (e.g., 21-2205 )");
-                    isValid = false;
-                }
-
+                
                 if (string.IsNullOrWhiteSpace(fullNameTextBox.Text))
                 {
                     errorProvider1.SetError(fullNameTextBox, "Textbox is empty.");
@@ -177,61 +167,39 @@ namespace qcu_dolrmam_system
                     isValid = false;
                 }
 
-                if (string.IsNullOrWhiteSpace(emailTextBox.Text))
-                {
-                    errorProvider1.SetError(emailTextBox, "Email cannot be empty.");
-                    isValid = false;
-                }
-                else if (!System.Text.RegularExpressions.Regex.IsMatch(emailTextBox.Text, @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"))
-                {
-                    errorProvider1.SetError(emailTextBox, "Please enter a valid email address.");
-                    isValid = false;
-                }
-
-                if (string.IsNullOrWhiteSpace(mobileNumTextBox.Text))
-                {
-                    errorProvider1.SetError(mobileNumTextBox, "Mobile number cannot be empty.");
-                    isValid = false;
-                }
-                else if (!System.Text.RegularExpressions.Regex.IsMatch(mobileNumTextBox.Text, @"^\d{11}$"))
-                {
-                    errorProvider1.SetError(mobileNumTextBox, "Mobile number must be exactly 11 digits.");
-                    isValid = false;
-                }
-
                 if (StudentNumTextBox == null)
                 {
                     MessageBox.Show("❌ Error: StudentNumTextBox is NULL.", "UI Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                if (!int.TryParse(StudentNumTextBox.Text, out int studentNumber))
+                // Validate Student Number as a String (Ensure it's numeric)
+                string studentNumber = StudentNumTextBox.Text.Trim();
+                if (string.IsNullOrWhiteSpace(studentNumber) || !System.Text.RegularExpressions.Regex.IsMatch(studentNumber, @"^\d{2}-\d{4}$"))
                 {
-                    MessageBox.Show("Invalid student number! Please enter a valid numeric value.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Invalid student number! Please enter a valid format (e.g., xx-xxxx).", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                // Ensure All Fields Are Filled
-                if (string.IsNullOrWhiteSpace(fullNameTextBox.Text) ||
-                    string.IsNullOrWhiteSpace(emailTextBox.Text) ||
-                    string.IsNullOrWhiteSpace(yrSecComboBox.Text) ||
-                    string.IsNullOrWhiteSpace(remarksCheckBox.Text))
+                if (SubComboBox.SelectedItem is Subject selectedSubject)
                 {
-                    MessageBox.Show("Please fill in all required fields before submitting.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                    string terminalNumberStr = "1"; // Convert integer to string
 
-                // Call StoreAttendance
-                await StoreAttendance(
-                    professorId: 1,
-                    sectionId: 1,
-                    terminalCode: 1,
-                    studentFullName: fullNameTextBox.Text,
-                    studentEmail: emailTextBox.Text,
-                    studentNumber: studentNumber,
-                    yearSection: yrSecComboBox.Text,
-                    remarks: remarksCheckBox.Text
-                );
+                    string formattedStudentNumber = studentNumber.Replace("-", "");
+
+                    await StoreAttendance(
+                        subjectId: selectedSubject.Id,
+                        terminalNumber: terminalNumberStr,  
+                        studentFullName: fullNameTextBox.Text,
+                        studentEmail: emailTextBox.Text,
+                        studentNumber: formattedStudentNumber,
+                        remarks: remarksCheckBox.Text
+                                    );
+                }
+                else
+                {
+                    MessageBox.Show("Please select a subject.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 
@@ -253,12 +221,26 @@ namespace qcu_dolrmam_system
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            dateTextBox.Text = DateTime.Now.ToString("dd-MM-yy");
-            dayTextBox.Text = DateTime.Now.ToString("dddd");
-            timeTextBox.Text = DateTime.Now.ToString("hh:mm:ss tt");
+            dateTextBox.Text = DateTime.Now.ToString("dddd, dd-MM-yy hh:mm:ss tt");
         }
 
+
         // Section Class Model
+
+        public class Subject
+        {
+            public int Id { get; set; }
+            public string Name { get; set; } = string.Empty;
+            public Professor? Professor { get; set; }
+            public Section? Section { get; set; }
+        }
+
+        public class Professor
+        {
+            public int Id { get; set; }
+            public string Name { get; set; } = string.Empty;
+        }
+
         public class Section
         {
             public int Id { get; set; }
@@ -281,6 +263,41 @@ namespace qcu_dolrmam_system
 
         private void StudentNumTextBox_TextChanged(object sender, EventArgs e)
         {
+        }
+
+        private void dateTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timeTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void remarksCheckBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
