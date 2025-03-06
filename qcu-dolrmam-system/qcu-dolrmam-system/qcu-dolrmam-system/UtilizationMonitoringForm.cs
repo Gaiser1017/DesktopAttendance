@@ -154,7 +154,7 @@ namespace qcu_dolrmam_system
                     errorProvider1.SetError(StudentNumTextBox, "Student number cannot be empty.");
                     isValid = false;
                 }
-                
+
                 if (string.IsNullOrWhiteSpace(fullNameTextBox.Text))
                 {
                     errorProvider1.SetError(fullNameTextBox, "Textbox is empty.");
@@ -189,7 +189,7 @@ namespace qcu_dolrmam_system
 
                     await StoreAttendance(
                         subjectId: selectedSubject.Id,
-                        terminalNumber: terminalNumberStr,  
+                        terminalNumber: terminalNumberStr,
                         studentFullName: fullNameTextBox.Text,
                         studentEmail: emailTextBox.Text,
                         studentNumber: formattedStudentNumber,
@@ -216,6 +216,8 @@ namespace qcu_dolrmam_system
 
         private void UtilizationMonitoringForm_Load(object sender, EventArgs e)
         {
+            terminalTextBox.Text = Environment.MachineName;
+            terminalTextBox.ReadOnly = true;
             timer1.Enabled = true;
         }
 
@@ -298,6 +300,18 @@ namespace qcu_dolrmam_system
         private void label4_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void SelectAllCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            bool isChecked = SelectAllCheckBox.Checked;
+
+            // Set all checkboxes to the same checked state
+            systemUnitCheckBox.Checked = isChecked;
+            monitorCheckBox.Checked = isChecked;
+            keyboardCheckBox.Checked = isChecked;
+            mouseCheckBox.Checked = isChecked;
+            networkConnCheckBox.Checked = isChecked;
         }
     }
 }

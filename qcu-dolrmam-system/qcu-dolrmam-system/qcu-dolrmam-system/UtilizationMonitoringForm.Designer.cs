@@ -65,6 +65,8 @@
             cancelButton = new Button();
             timer1 = new System.Windows.Forms.Timer(components);
             errorProvider1 = new ErrorProvider(components);
+            label5 = new Label();
+            SelectAllCheckBox = new CheckBox();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
@@ -84,6 +86,8 @@
             // panel1
             // 
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(SelectAllCheckBox);
+            panel1.Controls.Add(label5);
             panel1.Controls.Add(ProfTextBox);
             panel1.Controls.Add(label4);
             panel1.Controls.Add(label3);
@@ -203,7 +207,7 @@
             // 
             networkConnCheckBox.AutoSize = true;
             networkConnCheckBox.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            networkConnCheckBox.Location = new Point(719, 716);
+            networkConnCheckBox.Location = new Point(722, 745);
             networkConnCheckBox.Margin = new Padding(4, 5, 4, 5);
             networkConnCheckBox.Name = "networkConnCheckBox";
             networkConnCheckBox.Size = new Size(216, 26);
@@ -226,7 +230,7 @@
             // 
             mouseCheckBox.AutoSize = true;
             mouseCheckBox.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            mouseCheckBox.Location = new Point(575, 716);
+            mouseCheckBox.Location = new Point(578, 745);
             mouseCheckBox.Margin = new Padding(4, 5, 4, 5);
             mouseCheckBox.Name = "mouseCheckBox";
             mouseCheckBox.Size = new Size(94, 26);
@@ -247,7 +251,7 @@
             // 
             keyboardCheckBox.AutoSize = true;
             keyboardCheckBox.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            keyboardCheckBox.Location = new Point(402, 716);
+            keyboardCheckBox.Location = new Point(405, 745);
             keyboardCheckBox.Margin = new Padding(4, 5, 4, 5);
             keyboardCheckBox.Name = "keyboardCheckBox";
             keyboardCheckBox.Size = new Size(121, 26);
@@ -267,7 +271,7 @@
             // 
             monitorCheckBox.AutoSize = true;
             monitorCheckBox.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            monitorCheckBox.Location = new Point(252, 716);
+            monitorCheckBox.Location = new Point(255, 745);
             monitorCheckBox.Margin = new Padding(4, 5, 4, 5);
             monitorCheckBox.Name = "monitorCheckBox";
             monitorCheckBox.Size = new Size(102, 26);
@@ -291,7 +295,7 @@
             // 
             systemUnitCheckBox.AutoSize = true;
             systemUnitCheckBox.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            systemUnitCheckBox.Location = new Point(61, 716);
+            systemUnitCheckBox.Location = new Point(64, 745);
             systemUnitCheckBox.Margin = new Padding(4, 5, 4, 5);
             systemUnitCheckBox.Name = "systemUnitCheckBox";
             systemUnitCheckBox.Size = new Size(143, 26);
@@ -313,7 +317,7 @@
             label16.AutoSize = true;
             label16.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label16.ForeColor = Color.Red;
-            label16.Location = new Point(61, 658);
+            label16.Location = new Point(61, 652);
             label16.Margin = new Padding(4, 0, 4, 0);
             label16.Name = "label16";
             label16.Size = new Size(599, 25);
@@ -334,7 +338,7 @@
             // 
             label15.AutoSize = true;
             label15.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label15.Location = new Point(61, 622);
+            label15.Location = new Point(61, 617);
             label15.Margin = new Padding(4, 0, 4, 0);
             label15.Name = "label15";
             label15.Size = new Size(111, 25);
@@ -462,6 +466,26 @@
             // 
             errorProvider1.ContainerControl = this;
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.Location = new Point(64, 697);
+            label5.Name = "label5";
+            label5.Size = new Size(89, 25);
+            label5.TabIndex = 37;
+            label5.Text = "Select All";
+            // 
+            // SelectAllCheckBox
+            // 
+            SelectAllCheckBox.AutoSize = true;
+            SelectAllCheckBox.Location = new Point(156, 700);
+            SelectAllCheckBox.Name = "SelectAllCheckBox";
+            SelectAllCheckBox.Size = new Size(22, 21);
+            SelectAllCheckBox.TabIndex = 38;
+            SelectAllCheckBox.UseVisualStyleBackColor = true;
+            SelectAllCheckBox.CheckedChanged += SelectAllCheckBox_CheckedChanged;
+            // 
             // UtilizationMonitoringForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -521,5 +545,7 @@
         private Label label3;
         private Label label4;
         private TextBox ProfTextBox;
+        private CheckBox SelectAllCheckBox;
+        private Label label5;
     }
 }
