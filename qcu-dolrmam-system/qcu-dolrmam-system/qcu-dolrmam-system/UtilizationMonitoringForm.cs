@@ -88,32 +88,28 @@ namespace qcu_dolrmam_system
             {
                 try
                 {
-                    // Convert terminalNumber to a string first
-                    string terminalNumberStr = terminalNumber.ToString();
+                    // Collect peripherals state
+                    var peripherals = new Dictionary<string, bool>
+        {
+            { "System Unit", systemUnitCheckBox.Checked },
+            { "Monitor", monitorCheckBox.Checked },
+            { "Keyboard", keyboardCheckBox.Checked },
+            { "Mouse", mouseCheckBox.Checked },
+            { "Network Connection", networkConnCheckBox.Checked }
+        };
 
                     var attendanceData = new
                     {
                         subject_id = subjectId,
-                        terminal_number = terminalNumberStr,
+                        terminal_number = terminalNumber,
                         student_full_name = studentFullName,
                         student_email = studentEmail,
-                        student_number = studentNumber.Trim(), // Ensure no extra spaces
+                        student_number = studentNumber.Trim(),
+                        peripherals = peripherals,  // Include peripherals in request
                         remarks = remarks
                     };
 
-
-
-                    string jsonPayload;
-                    try
-                    {
-                        jsonPayload = JsonConvert.SerializeObject(attendanceData);
-                    }
-                    catch (JsonException jsonEx)
-                    {
-                        MessageBox.Show($"⚠ JSON Serialization Error: {jsonEx.Message}", "Serialization Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
+                    string jsonPayload = JsonConvert.SerializeObject(attendanceData);
                     var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
                     HttpResponseMessage response = await client.PostAsync(storeUrl, content);
