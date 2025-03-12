@@ -25,7 +25,7 @@ namespace qcu_dolrmam_system
         // Fetch Subjects from API
         private async Task LoadSubjects()
         {
-            string subjectsUrl = "http://localhost:8000/api/subjects";
+            string subjectsUrl = "https://qcu-lab-resource.cloud/api/subjects";
 
             using (HttpClient client = new HttpClient())
             {
@@ -84,7 +84,7 @@ namespace qcu_dolrmam_system
                                            string studentFullName, string studentEmail,
                                            string studentNumber, string remarks)
         {
-            string storeUrl = "http://localhost:8000/api/store/attendance";  // Ensure backend URL
+            string storeUrl = "https://qcu-lab-resource.cloud/api/store/attendance";  // Ensure backend URL
             {
                 try
                 {
