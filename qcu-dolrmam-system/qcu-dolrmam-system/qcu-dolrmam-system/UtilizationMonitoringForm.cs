@@ -207,7 +207,37 @@ namespace qcu_dolrmam_system
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            // Call recursive method to clear controls inside any container (Panel, GroupBox, etc.)
+            ClearControls(this);
+
+            // Reset terminalTextBox to Machine Name
+            terminalTextBox.Text = Environment.MachineName;
+
+            // Reset Date Field to current date & time
+            dateTextBox.Text = DateTime.Now.ToString("dddd, dd-MM-yy hh:mm:ss tt");
+
+            // Show a confirmation message
+            MessageBox.Show("Form has been cleared!", "Reset Form", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ClearControls(Control parent)
+        {
+            foreach (Control ctrl in parent.Controls)
+            {
+                if (ctrl is TextBox textBox)
+                {
+                    textBox.Clear(); // Clear all text fields
+                }
+                else if (ctrl is CheckBox checkBox)
+                {
+                    checkBox.Checked = false; // Uncheck checkboxes
+                }
+                else if (ctrl is Panel || ctrl is GroupBox)
+                {
+                    // Recursively clear controls inside Panels or GroupBoxes
+                    ClearControls(ctrl);
+                }
+            }
         }
 
         private void UtilizationMonitoringForm_Load(object sender, EventArgs e)
@@ -308,6 +338,11 @@ namespace qcu_dolrmam_system
             keyboardCheckBox.Checked = isChecked;
             mouseCheckBox.Checked = isChecked;
             networkConnCheckBox.Checked = isChecked;
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
